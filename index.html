@@ -1,0 +1,1719 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Chick Point — Chicken Gyro · Paterson, NJ</title>
+<meta name="description" content="Halal chicken gyro on Main Street in Paterson, NJ. 8 house-made sauces. Chicken-first, no debate." />
+<meta name="theme-color" content="#F4842A" />
+
+<!-- Favicons + PWA icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png" />
+
+<!-- Open Graph / social previews -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Chick Point — Chicken Gyro · Paterson, NJ" />
+<meta property="og:description" content="Halal chicken gyro. 8 house-made sauces. New Jersey’s favorite chicken. No debate." />
+<meta property="og:image" content="og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Chick Point — Chicken Gyro" />
+<meta name="twitter:description" content="Halal chicken gyro · Paterson, NJ." />
+<meta name="twitter:image" content="og-image.jpg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Familjen+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" />
+
+<script src="image-slot.js"></script>
+
+<style>
+/* ───────────────────────────────────────────────────────────────
+   CHICK POINT — single-page site
+   Locked palette · 60% neutral / 30% supporting / 10% orange
+   Headlines: Poetsen One ALL CAPS  ·  Body: Familjen Grotesk
+   (Familjen Grotesk subbed in for F Code Next — closest free
+    humanist sans on Google Fonts. Swap when font file is available.)
+   ─────────────────────────────────────────────────────────────── */
+
+:root {
+  --chick-orange: #F4842A;
+  --deep-orange:  #C9611A;
+  --black:        #000000;
+  --charcoal:     #1A1A1A;
+  --cream:        #FFF8F2;
+  --white:        #FFFFFF;
+  --ink:          #1A1A1A;
+  --rule:         #E9E5DF;
+
+  --font-display: "Poetsen One", system-ui, sans-serif;
+  --font-body:    "Familjen Grotesk", "F Code Next", ui-sans-serif, system-ui, sans-serif;
+
+  --maxw:    1320px;
+  --pad:     clamp(20px, 4vw, 56px);
+
+  --t-h0:    clamp(56px, 13vw, 196px);
+  --t-h1:    clamp(40px, 8vw, 120px);
+  --t-h2:    clamp(28px, 4.6vw, 64px);
+  --t-h3:    clamp(20px, 2.2vw, 28px);
+  --t-body:  clamp(15px, 1.15vw, 18px);
+  --t-small: 13px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+.display { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.005em; line-height: 0.92; font-weight: 400; }
+.mono    { font-family: var(--font-body); font-feature-settings: "tnum" 1; }
+.italic  { font-style: italic; }
+.eyebrow {
+  font-size: var(--t-small);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ── Persistent CTA top-right ────────────────────────────────── */
+.cta-fixed {
+  position: fixed;
+  top: clamp(16px, 2.2vw, 28px);
+  right: clamp(16px, 2.2vw, 28px);
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px 13px;
+  background: var(--chick-orange);
+  color: var(--white);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 15px;
+  line-height: 1;
+  box-shadow: 0 8px 24px -10px rgba(0,0,0,0.35);
+  transition: background 160ms ease, transform 160ms ease;
+}
+.cta-fixed:hover { background: var(--deep-orange); transform: translateY(-1px); }
+.cta-fixed:hover { animation-play-state: paused; }
+.cta-fixed { animation: cta-breathe 3.4s ease-in-out infinite; }
+@keyframes cta-breathe {
+  0%, 100% { box-shadow: 0 8px 24px -10px rgba(0,0,0,0.35), 0 0 0 0 rgba(244,132,42,0.45); }
+  50%      { box-shadow: 0 8px 24px -10px rgba(0,0,0,0.35), 0 0 0 14px rgba(244,132,42,0); }
+}
+.cta-fixed .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--white); display: inline-block; }
+.cta-fixed .phone { font-family: var(--font-body); font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 14px; }
+
+/* On mobile: shorter label */
+.cta-fixed .desktop-label { display: inline; }
+.cta-fixed .mobile-label  { display: none; }
+@media (max-width: 1080px) {
+  .cta-fixed .phone { display: none; }
+}
+@media (max-width: 720px) {
+  .cta-fixed .desktop-label { display: none; }
+  .cta-fixed .mobile-label  { display: inline; }
+  .cta-fixed { padding: 12px 16px; font-size: 13px; }
+}
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  background: var(--white);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+}
+
+.hero-frame {
+  position: relative;
+  margin: clamp(72px, 8vw, 96px) var(--pad) 0;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--charcoal);
+  isolation: isolate;
+}
+.hero-frame::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.0) 55%, rgba(0,0,0,0.55) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 4/3;
+  min-height: 60vh;
+  object-fit: cover;
+  object-position: center;
+}
+@media (max-width: 720px) { .hero-photo { aspect-ratio: 4/5; min-height: 70svh; } }
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: clamp(20px, 3vw, 44px);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  pointer-events: none;
+}
+.hero-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  color: var(--white);
+}
+.hero-top .badge {
+  border: 1px solid rgba(255,255,255,0.5);
+  color: var(--white);
+  padding: 8px 12px 7px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-bottom {
+  align-self: end;
+  color: var(--white);
+}
+.hero-bottom .wordmark {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: var(--t-h0);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  color: var(--white);
+}
+
+.hero-logo {
+  width: clamp(180px, 22vw, 280px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,0.4));
+}
+.hero-side-logo {
+  width: clamp(180px, 24vw, 280px);
+  height: auto;
+  display: block;
+  margin: 12px 0 0;
+}
+.footer-logo {
+  width: clamp(140px, 16vw, 200px);
+  height: auto;
+  display: block;
+  background: var(--white);
+  border-radius: 999px;
+  padding: 0;
+}
+.hero-bottom .tag {
+  font-style: italic;
+  color: var(--chick-orange);
+  font-size: clamp(22px, 3.2vw, 44px);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px var(--pad);
+  font-size: var(--t-small);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.hero-meta .dotrow { display: inline-flex; gap: 14px; align-items: center; }
+.hero-meta .o { color: var(--chick-orange); }
+
+/* ── Section scaffolding ─────────────────────────────────────── */
+section { padding: clamp(72px, 9vw, 140px) var(--pad); }
+.wrap { max-width: var(--maxw); margin: 0 auto; }
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+.section-head .num {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--chick-orange);
+  font-weight: 600;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: var(--t-h2);
+}
+.section-head p { max-width: 56ch; margin: 6px 0 0; color: #333; }
+
+/* ── Instagram (Marquee Type Storm) ──────────────────────────── */
+.ig {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0;
+  /* Top band stacks orange, then a thin link strip, then black band */
+}
+.ig-band {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(28px, 4vw, 56px) 0;
+  user-select: none;
+}
+.ig-band.orange { background: var(--chick-orange); color: var(--black); }
+.ig-band.black  { background: var(--black);        color: var(--chick-orange); }
+
+.ig-band a.ig-band-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ig-track {
+  display: flex;
+  gap: clamp(40px, 4vw, 80px);
+  width: max-content;
+  align-items: center;
+  animation: ig-marquee-l 38s linear infinite;
+  will-change: transform;
+  white-space: nowrap;
+}
+.ig-band.black .ig-track {
+  animation-name: ig-marquee-r;
+  animation-duration: 52s;
+}
+.ig-band:hover .ig-track,
+.ig-band:focus-within .ig-track { animation-play-state: paused; }
+
+@keyframes ig-marquee-l {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes ig-marquee-r {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.ig-token {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(28px, 4.4vw, 56px);
+  line-height: 1;
+  letter-spacing: -0.005em;
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(20px, 2.4vw, 40px);
+}
+.ig-token .dot {
+  width: clamp(10px, 0.9vw, 14px);
+  height: clamp(10px, 0.9vw, 14px);
+  border-radius: 999px;
+  background: currentColor;
+  display: inline-block;
+  opacity: 0.55;
+  flex: 0 0 auto;
+}
+.ig-token .at {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 700;
+  vertical-align: -0.06em;
+}
+.ig-token.italic {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(20px, 2.8vw, 36px);
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0.85;
+}
+
+/* Quiet middle strip with the actual link */
+.ig-link {
+  position: relative;
+  z-index: 2;
+  background: var(--white);
+  border-bottom: 1px solid var(--rule);
+  border-top: 1px solid var(--rule);
+  padding: clamp(18px, 2vw, 28px) var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: var(--t-small);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #555;
+}
+.ig-link .left { display: inline-flex; align-items: center; gap: 10px; }
+.ig-link .left .o {
+  width: 8px; height: 8px; border-radius: 999px;
+  background: var(--chick-orange); display: inline-block;
+}
+.ig-link a.cta {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: clamp(16px, 1.6vw, 22px);
+  color: var(--ink);
+  display: inline-flex; align-items: center; gap: 12px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 4px;
+  transition: color 200ms ease, border-color 200ms ease, gap 200ms ease;
+}
+.ig-link a.cta:hover { color: var(--chick-orange); border-color: var(--chick-orange); gap: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ig-track { animation: none !important; transform: translateX(0) !important; }
+}
+
+/* ── Running Chicken (occasional easter-egg animation) ───────── */
+.running-chicken {
+  position: fixed;
+  left: -90px;
+  bottom: clamp(8px, 1.4vw, 18px);
+  z-index: 40;
+  pointer-events: none;
+  width: 56px; height: 42px;
+  display: block;
+  opacity: 0;
+}
+.running-chicken.run {
+  animation: chicken-cross 3.2s cubic-bezier(0.4, 0, 0.4, 1) forwards;
+}
+.running-chicken svg { display: block; width: 100%; height: 100%; }
+.running-chicken.run svg { animation: chicken-bob 0.16s ease-in-out infinite; transform-origin: center; }
+.running-chicken .chk-leg-1 { transform-origin: 42px 46px; }
+.running-chicken .chk-leg-2 { transform-origin: 34px 46px; }
+.running-chicken.run .chk-leg-1 { animation: chk-leg-a 0.16s linear infinite; }
+.running-chicken.run .chk-leg-2 { animation: chk-leg-b 0.16s linear infinite; }
+@keyframes chicken-cross {
+  0%   { transform: translateX(0);                              opacity: 1; }
+  95%  {                                                        opacity: 1; }
+  100% { transform: translateX(calc(100vw + 180px));            opacity: 1; }
+}
+@keyframes chicken-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+@keyframes chk-leg-a {
+  0%, 100% { transform: rotate(35deg); }
+  50%      { transform: rotate(-35deg); }
+}
+@keyframes chk-leg-b {
+  0%, 100% { transform: rotate(-35deg); }
+  50%      { transform: rotate(35deg); }
+}
+
+/* ── Pillars ─────────────────────────────────────────────────── */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 24px);
+}
+@media (max-width: 900px) { .pillars { grid-template-columns: 1fr; } }
+
+.pillar {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  padding: clamp(20px, 1.8vw, 26px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pillar.alt { background: var(--black); color: var(--white); border-color: var(--black); }
+.pillar.accent { background: var(--chick-orange); color: var(--white); border-color: var(--chick-orange); }
+
+.pillar .index {
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.pillar h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(22px, 2.2vw, 32px);
+  line-height: 0.95;
+  margin: 0;
+}
+.pillar p { margin: 10px 0 0; max-width: 28ch; opacity: 0.85; font-size: 14px; line-height: 1.4; }
+
+.pillar .mark {
+  position: absolute;
+  right: -10px; bottom: -10px;
+  width: 110px; height: 110px;
+  border-radius: 999px;
+  opacity: 0.1;
+  border: 2px solid currentColor;
+}
+.pillar.accent .mark { opacity: 0.2; }
+.pillar .stamp {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 9px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ── Sauces ──────────────────────────────────────────────────── */
+.sauces { background: var(--black); color: var(--white); border-radius: 32px; margin: 0 var(--pad); padding: clamp(64px, 8vw, 120px) clamp(28px, 5vw, 80px); }
+.sauces .section-head h2 { color: var(--white); font-size: clamp(40px, 7vw, 96px); }
+.sauces .section-head .num { color: var(--chick-orange); }
+.sauces .section-head p { color: #d6d3cf; }
+
+.sauce-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .sauce-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.sauce {
+  background: var(--black);
+  padding: clamp(20px, 2vw, 32px);
+  min-height: 180px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+  transition: background 200ms ease, color 200ms ease;
+}
+.sauce:hover { background: var(--chick-orange); color: var(--white); }
+.sauce .n { font-family: var(--font-body); font-size: 12px; letter-spacing: 0.22em; opacity: 0.55; }
+.sauce .name { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(26px, 2.4vw, 36px); line-height: 1; margin-top: auto; }
+.sauce .note { font-size: 13px; opacity: 0.65; margin-top: 8px; min-height: 1.2em; }
+.sauce.hot .name, .sauce.xhot .name { color: var(--chick-orange); }
+.sauce:hover .name { color: var(--white); }
+.sauce:hover .n, .sauce:hover .note { opacity: 1; }
+
+.sauces-foot { margin-top: clamp(32px, 4vw, 56px); display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 16px; color: #d6d3cf; }
+.sauces-foot .big { font-family: var(--font-display); text-transform: uppercase; color: var(--white); font-size: clamp(20px, 2vw, 30px); }
+
+/* ── Menu ────────────────────────────────────────────────────── */
+.menu .section-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 24px; }
+@media (max-width: 720px) { .menu .section-head { grid-template-columns: 1fr; } }
+.menu .head-side { font-size: var(--t-small); letter-spacing: 0.18em; text-transform: uppercase; color: #555; }
+
+/* Menu carousel (always-on marquee) ─────────────────────────── */
+.menu-tabs-wrap {
+  display: flex;
+  justify-content: center;
+  margin: clamp(24px, 3vw, 40px) 0 clamp(20px, 2vw, 28px);
+}
+.menu-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  background: var(--cream);
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+}
+.menu-tab {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(13px, 1vw, 15px);
+  letter-spacing: 0.04em;
+  padding: 12px 20px 11px;
+  min-height: 44px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  cursor: pointer;
+  transition: background 220ms ease, color 220ms ease;
+}
+.menu-tab:hover { background: var(--white); }
+.menu-tab[aria-pressed="true"] {
+  background: var(--black);
+  color: var(--white);
+}
+
+.menu-carousel {
+  position: relative;
+  margin: 0 calc(-1 * var(--pad));
+  overflow: hidden;
+  padding: 36px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 80px, #000 calc(100% - 80px), transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 80px, #000 calc(100% - 80px), transparent);
+}
+.menu-track {
+  display: flex;
+  gap: clamp(20px, 2vw, 32px);
+  width: max-content;
+  animation: menu-scroll 90s linear infinite;
+  padding: 0 clamp(20px, 2vw, 32px);
+  will-change: transform;
+}
+.menu-carousel:hover .menu-track,
+.menu-carousel:focus-within .menu-track { animation-play-state: paused; }
+@keyframes menu-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.menu-card {
+  width: clamp(190px, 18vw, 240px);
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  transition: opacity 480ms ease, transform 480ms ease, filter 480ms ease;
+}
+.menu-card-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--cream);
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  padding: clamp(14px, 1.4vw, 22px);
+  position: relative;
+  overflow: hidden;
+}
+.menu-card-img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 50% 60%, rgba(0,0,0,0.06), transparent 70%);
+}
+.menu-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 24px rgba(0,0,0,0.22));
+  animation: menu-float 6s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+.menu-card:nth-child(3n) .menu-card-img img { animation-delay: -2s; animation-duration: 7s; }
+.menu-card:nth-child(3n+1) .menu-card-img img { animation-delay: -4s; animation-duration: 5.4s; }
+@keyframes menu-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+.menu-card-cat {
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--chick-orange);
+  font-weight: 600;
+  margin-top: 4px;
+}
+.menu-card-name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(15px, 1.2vw, 19px);
+  line-height: 1;
+  margin: 4px 0 0;
+}
+.menu-card-sub {
+  margin: 0;
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  color: #6b6256;
+  font-style: italic;
+  line-height: 1.35;
+  max-width: 24ch;
+  min-height: 2.7em;
+}
+
+/* Filter state — non-matching cards dim & desaturate, keep flowing */
+body[data-menu-filter]:not([data-menu-filter="all"]) .menu-card { opacity: 0.18; transform: scale(0.86); filter: saturate(0.25); }
+body[data-menu-filter="wraps"]   .menu-card[data-cat="wraps"],
+body[data-menu-filter="plates"]  .menu-card[data-cat="plates"],
+body[data-menu-filter="burger"]  .menu-card[data-cat="burger"],
+body[data-menu-filter="sides"]   .menu-card[data-cat="sides"],
+body[data-menu-filter="dessert"] .menu-card[data-cat="dessert"] {
+  opacity: 1; transform: scale(1); filter: none;
+}
+
+.menu-foot {
+  margin-top: clamp(28px, 3vw, 44px);
+  font-size: var(--t-small);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #666;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+
+/* ── About ───────────────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: stretch;
+}
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+
+.about-photo {
+  border-radius: 24px;
+  overflow: hidden;
+  min-height: 460px;
+  background: var(--charcoal);
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  padding: 0;
+}
+@media (max-width: 900px) {
+  .about-photo { min-height: 360px; }
+}
+.about-text { padding: clamp(0px, 1vw, 16px) 0; display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+.about-text h2 { font-size: clamp(32px, 5vw, 72px); margin: 0; }
+.about-text p { margin: 0; font-size: clamp(16px, 1.2vw, 19px); max-width: 46ch; }
+.about-text p strong { color: var(--chick-orange); font-weight: 600; font-style: italic; }
+.about-text .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 14px; }
+.about-text .stat { border-top: 1px solid var(--rule); padding-top: 12px; }
+.about-text .stat .k { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(22px, 2vw, 28px); color: var(--ink); line-height: 1; }
+.about-text .stat .v { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #777; margin-top: 6px; }
+
+/* ── Quote band ──────────────────────────────────────────────── */
+.quote-band {
+  position: relative;
+  min-height: 56vh;
+  background: var(--charcoal);
+  color: var(--white);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: clamp(72px, 8vw, 120px) var(--pad);
+  overflow: hidden;
+  isolation: isolate;
+}
+.quote-band .bg { position: absolute; inset: 0; z-index: 0; }
+.quote-band .bg::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.65));
+}
+.quote-band .quote {
+  position: relative; z-index: 2;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(40px, 7vw, 112px);
+  line-height: 0.95;
+  max-width: 18ch;
+}
+.quote-band .quote .accent { color: var(--chick-orange); }
+.quote-band .attr {
+  position: relative; z-index: 2;
+  margin-top: 22px;
+  font-style: italic;
+  font-size: clamp(15px, 1.2vw, 18px);
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ── Order Online ────────────────────────────────────────────── */
+.order {
+  background: var(--cream);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.order .section-head { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 24px; }
+@media (max-width: 720px) { .order .section-head { grid-template-columns: 1fr; } }
+.order .head-side { font-size: var(--t-small); letter-spacing: 0.18em; text-transform: uppercase; color: #7a6d5b; }
+
+.delivery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.8vw, 24px);
+}
+@media (max-width: 900px) { .delivery-grid { grid-template-columns: 1fr; } }
+
+.delivery-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: clamp(24px, 2.6vw, 36px);
+  border-radius: 24px;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  overflow: hidden;
+  transition: transform 220ms ease, border-color 220ms ease;
+  min-height: 320px;
+}
+.delivery-card:hover { transform: translateY(-4px); border-color: var(--black); }
+.delivery-card:hover .dc-arrow { background: var(--chick-orange); color: var(--white); transform: translate(2px, -2px); }
+
+.delivery-card .dc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.delivery-card .dc-num {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--chick-orange);
+  font-weight: 600;
+}
+.delivery-card .dc-arrow {
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: var(--cream);
+  font-size: 22px;
+  transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+}
+
+.delivery-card .dc-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+}
+.delivery-card .dc-mark {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: grid; place-items: center;
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 1;
+  color: var(--white);
+  flex: 0 0 56px;
+}
+.delivery-card .dc-mark.dd { background: #FF3008; }
+.delivery-card .dc-mark.ue { background: #06C167; }
+.delivery-card .dc-mark.gh { background: #F63440; }
+
+.delivery-card .dc-name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1;
+}
+.delivery-card .dc-meta {
+  font-size: 13px;
+  color: #6b6256;
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+.delivery-card .dc-cta {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.delivery-card .dc-cta::after {
+  content: "";
+  display: inline-block;
+  width: 28px; height: 1px;
+  background: currentColor;
+  transition: width 220ms ease;
+}
+.delivery-card:hover .dc-cta::after { width: 44px; }
+
+.order-foot {
+  margin-top: clamp(28px, 3vw, 44px);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: var(--t-small);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7a6d5b;
+}
+.order-foot a.pickup-cta {
+  color: var(--ink);
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  padding-bottom: 2px;
+}
+.order-foot a.pickup-cta:hover { color: var(--chick-orange); border-color: var(--chick-orange); }
+
+/* ── Visit ───────────────────────────────────────────────────── */
+.visit { background: var(--cream); }
+.visit-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(28px, 4vw, 56px);
+}
+@media (max-width: 900px) { .visit-grid { grid-template-columns: 1fr; } }
+
+.visit-photo {
+  border-radius: 24px;
+  overflow: hidden;
+  min-height: 460px;
+  background: var(--charcoal);
+}
+
+.visit-info { display: flex; flex-direction: column; gap: 28px; }
+.visit-info h2 { font-size: clamp(36px, 6vw, 80px); margin: 0; }
+
+.info-block { border-top: 1px solid #E4DDD2; padding-top: 18px; display: grid; grid-template-columns: 140px 1fr; gap: 16px; }
+@media (max-width: 520px) { .info-block { grid-template-columns: 1fr; gap: 6px; } }
+.info-block .k { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #7a6d5b; padding-top: 2px; }
+.info-block .v { font-size: 17px; line-height: 1.5; }
+.info-block .v a { color: var(--ink); border-bottom: 1px solid rgba(0,0,0,0.2); }
+.info-block .v a:hover { color: var(--chick-orange); border-color: var(--chick-orange); }
+
+.google-card {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: var(--white);
+  border: 1px solid #E4DDD2;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+.google-card:hover { transform: translateY(-2px); border-color: var(--chick-orange); }
+.google-card .pin {
+  width: 46px; height: 46px; flex: 0 0 46px;
+  border-radius: 12px;
+  background: var(--chick-orange);
+  display: grid; place-items: center;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+.google-card .gc-text { display: flex; flex-direction: column; gap: 2px; }
+.google-card .gc-text .gc-title { font-family: var(--font-display); text-transform: uppercase; font-size: 18px; line-height: 1; }
+.google-card .gc-text .gc-sub { font-size: 13px; color: #7a6d5b; letter-spacing: 0.06em; }
+.google-card .arrow { margin-left: auto; font-size: 26px; opacity: 0.6; }
+
+/* ── Footer ──────────────────────────────────────────────────── */
+footer {
+  background: var(--black);
+  color: var(--white);
+  padding: clamp(56px, 7vw, 96px) var(--pad) 36px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 32px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+@media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
+
+footer .wordmark { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(40px, 6vw, 72px); line-height: 0.9; }
+footer .wordmark .tag { font-family: var(--font-body); font-style: italic; text-transform: none; font-size: clamp(16px, 1.4vw, 20px); color: var(--chick-orange); display: block; margin-top: 8px; }
+
+footer h4 { font-family: var(--font-display); text-transform: uppercase; font-size: 14px; letter-spacing: 0.06em; margin: 0 0 14px; color: var(--chick-orange); font-weight: 400; }
+footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; font-size: 15px; color: #e0dcd6; }
+footer a:hover { color: var(--chick-orange); }
+.socials { display: flex; gap: 10px; margin-top: 8px; }
+.socials a { display: inline-grid; place-items: center; width: 38px; height: 38px; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; font-size: 14px; }
+.socials a:hover { background: var(--chick-orange); border-color: var(--chick-orange); color: var(--white); }
+
+.footer-base {
+  max-width: var(--maxw);
+  margin: 48px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #a39e96;
+}
+
+/* ── Image slot styling override ─────────────────────────────── */
+image-slot {
+  width: 100%;
+  height: 100%;
+  --is-bg: #1A1A1A;
+  --is-color: #d6d3cf;
+}
+
+/* ── Fade-up on scroll ───────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 700ms ease, transform 700ms ease; }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: 80ms; }
+.reveal.d2 { transition-delay: 160ms; }
+.reveal.d3 { transition-delay: 240ms; }
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+  .marquee-track, .menu-card-img img, .menu-track { animation: none !important; transition: none !important; }
+  .cta-fixed { animation: none !important; }
+  .running-chicken { display: none !important; }
+}
+
+/* Selection */
+::selection { background: var(--chick-orange); color: var(--white); }
+
+/* ── Tweaks panel (tiny built-in) ────────────────────────────── */
+#tweaks-toggle {
+  position: fixed; bottom: 18px; left: 18px; z-index: 60;
+  background: var(--black); color: var(--white);
+  border: none; padding: 10px 14px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 12px; letter-spacing: 0.14em;
+  display: none;
+}
+#tweaks-panel {
+  position: fixed; bottom: 64px; left: 18px; z-index: 60;
+  background: var(--white); color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 16px;
+  width: 280px;
+  font-size: 13px;
+  box-shadow: 0 16px 40px -16px rgba(0,0,0,0.3);
+  display: none;
+}
+#tweaks-panel h5 { font-family: var(--font-display); text-transform: uppercase; margin: 0 0 12px; font-size: 14px; letter-spacing: 0.06em; }
+#tweaks-panel label { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--rule); }
+#tweaks-panel label:first-of-type { border-top: 0; }
+#tweaks-panel select { background: var(--cream); border: 1px solid var(--rule); padding: 4px 8px; border-radius: 6px; font-family: var(--font-body); font-size: 12px; }
+.tweaks-open #tweaks-panel { display: block; }
+
+/* Sauce-list variant */
+body[data-sauces="list"] .sauce-grid { grid-template-columns: 1fr; background: transparent; border: 0; }
+body[data-sauces="list"] .sauce { border-bottom: 1px solid rgba(255,255,255,0.12); flex-direction: row; align-items: baseline; gap: 24px; padding: 22px 0; min-height: 0; }
+body[data-sauces="list"] .sauce .name { margin: 0; font-size: clamp(28px, 3vw, 44px); }
+body[data-sauces="list"] .sauce .note { margin: 0; flex: 1; text-align: right; }
+body[data-sauces="list"] .sauce:hover { background: transparent; color: var(--chick-orange); }
+
+/* Hero variant: split */
+body[data-hero="split"] .hero { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+body[data-hero="split"] .hero-frame { margin: clamp(72px, 8vw, 96px) 0 var(--pad) var(--pad); }
+body[data-hero="split"] .hero-side { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(72px, 8vw, 96px) var(--pad) var(--pad); }
+.hero-side { display: none; }
+body[data-hero="split"] .hero-side { display: flex; }
+body[data-hero="split"] .hero-bottom { display: none; }
+body[data-hero="split"] .hero-meta { display: none; }
+@media (max-width: 800px) {
+  body[data-hero="split"] .hero { grid-template-columns: 1fr; }
+  body[data-hero="split"] .hero-side { padding: 24px var(--pad); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═════════════════════════ Persistent CTA ═════════════════════ -->
+<a href="tel:+19738306867" class="cta-fixed" id="ctaTop">
+  <span class="dot"></span>
+  <span class="mobile-label">Order · Call</span>
+  <span class="desktop-label">Order Now</span>
+  <span class="phone">(973) 830-6867</span>
+</a>
+
+<!-- ═════════════════════════ HERO ═══════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-frame reveal">
+    <img id="hero-photo" class="hero-photo" src="images/hero.jpg" alt="Chick Point — full spread on the table: doner plate, burger, wings, sandwich, sides, baklava" fetchpriority="high" decoding="async" />
+
+    <div class="hero-overlay">
+      <div class="hero-top">
+        <span class="badge">Paterson · NJ · Est. on Main St.</span>
+        <span class="badge" style="background:var(--chick-orange);border-color:var(--chick-orange);">100% Halal</span>
+      </div>
+      <div></div>
+      <div class="hero-bottom">
+        <img class="hero-logo" src="images/logo.webp" alt="Chick Point — Chicken Gyro" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional split-mode side text -->
+  <div class="hero-side">
+    <div>
+      <div class="eyebrow" style="color:var(--chick-orange)">Paterson · NJ</div>
+      <img class="hero-side-logo" src="images/logo.webp" alt="Chick Point — Chicken Gyro" />
+    </div>
+    <p style="max-width:32ch;color:#333">Halal chicken. House-made sauces. The Paterson spot. Order. Eat. Come back.</p>
+  </div>
+
+  <div class="hero-meta">
+    <span class="dotrow"><span class="o">●</span> Halal Certified</span>
+    <span class="dotrow"><span class="o">●</span> Made Fresh Daily</span>
+    <span class="dotrow"><span class="o">●</span> 8 House-Made Sauces</span>
+    <span class="dotrow"><span class="o">●</span> 1021 Main St · Paterson</span>
+  </div>
+</section>
+
+<!-- ═════════════════════════ INSTAGRAM ══════════════════════════ -->
+<section class="ig" id="instagram" aria-label="Follow Chick Point on Instagram">
+
+  <!-- Top band — orange, scrolling left -->
+  <div class="ig-band orange">
+    <a class="ig-band-link" href="https://www.instagram.com/chickpointusa/" target="_blank" rel="noopener" aria-label="Open @chickpointusa on Instagram">
+      <div class="ig-track" aria-hidden="true">
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+        <span class="ig-token">Follow Us<span class="dot"></span></span>
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+        <span class="ig-token">More On Our Socials<span class="dot"></span></span>
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+        <span class="ig-token">Follow Us<span class="dot"></span></span>
+        <!-- duplicate set for seamless loop -->
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+        <span class="ig-token">Follow Us<span class="dot"></span></span>
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+        <span class="ig-token">More On Our Socials<span class="dot"></span></span>
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+        <span class="ig-token">Follow Us<span class="dot"></span></span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Quiet middle: the actual link -->
+  <div class="ig-link">
+    <span class="left"><span class="o" aria-hidden="true"></span>Live on Instagram &middot; @chickpointusa</span>
+    <a class="cta" href="https://www.instagram.com/chickpointusa/" target="_blank" rel="noopener">
+      Follow
+      <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+
+  <!-- Bottom band — black, scrolling right, brand statements -->
+  <div class="ig-band black">
+    <a class="ig-band-link" href="https://www.instagram.com/chickpointusa/" target="_blank" rel="noopener" aria-label="Open @chickpointusa on Instagram">
+      <div class="ig-track" aria-hidden="true">
+        <span class="ig-token">8 Sauces<span class="dot"></span></span>
+        <span class="ig-token italic">made fresh<span class="dot"></span></span>
+        <span class="ig-token">100% Halal<span class="dot"></span></span>
+        <span class="ig-token italic">Paterson, NJ<span class="dot"></span></span>
+        <span class="ig-token">Jersey's Favorite Chicken<span class="dot"></span></span>
+        <span class="ig-token italic">no debate<span class="dot"></span></span>
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+        <!-- duplicate set for seamless loop -->
+        <span class="ig-token">8 Sauces<span class="dot"></span></span>
+        <span class="ig-token italic">made fresh<span class="dot"></span></span>
+        <span class="ig-token">100% Halal<span class="dot"></span></span>
+        <span class="ig-token italic">Paterson, NJ<span class="dot"></span></span>
+        <span class="ig-token">Jersey's Favorite Chicken<span class="dot"></span></span>
+        <span class="ig-token italic">no debate<span class="dot"></span></span>
+        <span class="ig-token"><span class="at">@</span>chickpointusa<span class="dot"></span></span>
+      </div>
+    </a>
+  </div>
+
+</section>
+
+<!-- ═════════════════════════ PILLARS ════════════════════════════ -->
+
+<!-- ═════════════════════════ PILLARS ════════════════════════════ -->
+<section id="pillars">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="num">— 01 / What We're About</span>
+      <h2 class="display">Three things.<br/>That's the menu pitch.</h2>
+      <p>Chicken first. Sauces we made ourselves. Street energy without the corporate playbook. Everything else is detail.</p>
+    </div>
+
+    <div class="pillars">
+      <article class="pillar reveal d1">
+        <div>
+          <div class="index">— 01</div>
+          <span class="stamp">House-made</span>
+        </div>
+        <div>
+          <h3>Sauce<br/>we made<br/>ourselves.</h3>
+          <p>Eight of them. None bought in bulk. The Point Sauce hits different — and that's not marketing, that's just true.</p>
+        </div>
+        <div class="mark"></div>
+      </article>
+
+      <article class="pillar alt reveal d2" style="opacity: 0.9; height: 253px; justify-content: space-between; border-style: solid; padding: 27px; text-align: left; width: 377px">
+        <div>
+          <div class="index" style="color:var(--chick-orange)">— 02</div>
+          <span class="stamp">Certified · Always</span>
+        </div>
+        <div>
+          <h3>100%
+HALAL.
+</h3>
+          <p>Certified. Every item. Not a marketing line — just how we do it.</p>
+        </div>
+        <div class="mark"></div>
+      </article>
+
+      <article class="pillar accent reveal d3">
+        <div>
+          <div class="index">— 03</div>
+          <span class="stamp">Real quality</span>
+        </div>
+        <div>
+          <h3>FAST. FRESH. SERIOUS FOOD.</h3>
+          <p>Fast without being cold. Friendly without being soft. Best chicken in Paterson. No debate.</p>
+        </div>
+        <div class="mark"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ SAUCES ═════════════════════════════ -->
+<section class="sauces" id="sauces" style="opacity: 0.9">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="num">— 02 / The Differentiator</span>
+      <h2 class="display">8 sauces.<br/>All house-made.<br/><span style="color:var(--chick-orange)">PICK YOUR FAVORITE.</span></h2>
+      <p>Every other chicken spot has chicken. Nobody else has these. We didn't outsource a single one.</p>
+    </div>
+
+    <div class="sauce-grid">
+      <div class="sauce"><div class="n">— 01</div><div class="name">Special</div><div class="note">The Hatay-style house sauce. Start here.</div></div>
+      <div class="sauce"><div class="n">— 02</div><div class="name">White</div><div class="note">Cool, creamy, clean. Pairs with everything.</div></div>
+      <div class="sauce"><div class="n">— 03</div><div class="name">Point</div><div class="note">The signature. Hits different.</div></div>
+      <div class="sauce"><div class="n">— 04</div><div class="name">Ranch</div><div class="note">House ranch. Not from a tub.</div></div>
+      <div class="sauce"><div class="n">— 05</div><div class="name">Garlic</div><div class="note">Loud. In a good way.</div></div>
+      <div class="sauce"><div class="n">— 06</div><div class="name">BBQ</div><div class="note">Smoky. Sticky. Done right.</div></div>
+      <div class="sauce hot"><div class="n">— 07</div><div class="name">Hot</div><div class="note">Brings the heat.</div></div>
+      <div class="sauce xhot"><div class="n">— 08</div><div class="name">Extra&nbsp;Hot</div><div class="note">You asked for it.</div></div>
+    </div>
+
+    <div class="sauces-foot">
+      <div class="big">Made fresh. Made here.</div>
+      <div class="mono italic" style="opacity:0.7">— Available on every wrap, bowl &amp; burger.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ MENU ═══════════════════════════════ -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="num">— 03 / The Menu</span>
+        <h2 class="display">WRAPS. PLATES.
+BURGER. SIDES. DESSERTS.</h2>
+      </div>
+      <div class="head-side">Full menu in store · Call ahead anytime</div>
+    </div>
+
+    <div class="menu-tabs-wrap reveal">
+      <div class="menu-tabs" role="tablist" aria-label="Filter menu by category">
+        <button class="menu-tab" type="button" data-filter="all"     aria-pressed="true">All</button>
+        <button class="menu-tab" type="button" data-filter="wraps"   aria-pressed="false">Wraps</button>
+        <button class="menu-tab" type="button" data-filter="plates"  aria-pressed="false">Plates</button>
+        <button class="menu-tab" type="button" data-filter="burger"  aria-pressed="false">Burger</button>
+        <button class="menu-tab" type="button" data-filter="sides"   aria-pressed="false">Sides</button>
+        <button class="menu-tab" type="button" data-filter="dessert" aria-pressed="false">Dessert</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="menu-carousel reveal" aria-label="Chick Point menu — auto-scrolling">
+    <div class="menu-track" id="menuTrack">
+      <!-- Source set — duplicated in JS for seamless loop -->
+      <article class="menu-card" data-cat="wraps">
+        <div class="menu-card-img"><img src="images/chicken-wrap.webp" alt="Chicken Wrap" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Wrap</span>
+        <h3 class="menu-card-name">Chicken Wrap</h3>
+        <p class="menu-card-sub">Special Sauced (Hatay) · Cheese · Extra Hot</p>
+      </article>
+      <article class="menu-card" data-cat="wraps">
+        <div class="menu-card-img"><img src="images/zurna-wrap.webp" alt="Zurna Wrap" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Wrap</span>
+        <h3 class="menu-card-name">Zurna Wrap</h3>
+        <p class="menu-card-sub">Special Sauced (Hatay)</p>
+      </article>
+      <article class="menu-card" data-cat="wraps">
+        <div class="menu-card-img"><img src="images/takis-hot-wrap.webp" alt="Takis Hot Wrap" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Wrap</span>
+        <h3 class="menu-card-name">Takis Hot Wrap</h3>
+        <p class="menu-card-sub">House Takis collab · bring the heat</p>
+      </article>
+      <article class="menu-card" data-cat="wraps">
+        <div class="menu-card-img"><img src="images/falafel-wrap.webp" alt="Falafel Wrap" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Wrap</span>
+        <h3 class="menu-card-name">Falafel Wrap</h3>
+        <p class="menu-card-sub">Vegetarian</p>
+      </article>
+      <article class="menu-card" data-cat="wraps">
+        <div class="menu-card-img"><img src="images/chicken-sandwich.webp" alt="Chicken Sandwich" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Sandwich</span>
+        <h3 class="menu-card-name">Chicken Sandwich</h3>
+        <p class="menu-card-sub">Toasted bread · pickles · house sauce</p>
+      </article>
+
+      <article class="menu-card" data-cat="plates">
+        <div class="menu-card-img"><img src="images/chicken-iskender.webp" alt="Chicken Iskender" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Plate</span>
+        <h3 class="menu-card-name">Chicken Iskender</h3>
+        <p class="menu-card-sub">House yogurt · tomato · chicken doner</p>
+      </article>
+      <article class="menu-card" data-cat="plates">
+        <div class="menu-card-img"><img src="images/special-sauced-rice.webp" alt="Special Sauced Chicken Rice Bowl" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Bowl</span>
+        <h3 class="menu-card-name">Special Sauced Rice</h3>
+        <p class="menu-card-sub">Rice bowl · house special sauce</p>
+      </article>
+      <article class="menu-card" data-cat="plates">
+        <div class="menu-card-img"><img src="images/chicken-wings.webp" alt="Chicken Wings with Fries" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Plate</span>
+        <h3 class="menu-card-name">Chicken Wings</h3>
+        <p class="menu-card-sub">6 pcs · with fries</p>
+      </article>
+      <article class="menu-card" data-cat="plates">
+        <div class="menu-card-img"><img src="images/chicken-tenders.webp" alt="Chicken Tenders with Fries" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Plate</span>
+        <h3 class="menu-card-name">Chicken Tenders</h3>
+        <p class="menu-card-sub">5 pcs · with fries</p>
+      </article>
+
+      <article class="menu-card" data-cat="burger">
+        <div class="menu-card-img"><img src="images/point-burger.webp" alt="Point Burger" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Burger</span>
+        <h3 class="menu-card-name">Point Burger</h3>
+        <p class="menu-card-sub">Brioche bun · point sauce · add cheese</p>
+      </article>
+
+      <article class="menu-card" data-cat="sides">
+        <div class="menu-card-img"><img src="images/french-fries.webp" alt="French Fries" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Side</span>
+        <h3 class="menu-card-name">French Fries</h3>
+        <p class="menu-card-sub">Seasoned · crispy</p>
+      </article>
+      <article class="menu-card" data-cat="sides">
+        <div class="menu-card-img"><img src="images/mozzarella-sticks.webp" alt="Mozzarella Sticks" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Side</span>
+        <h3 class="menu-card-name">Mozzarella Sticks</h3>
+        <p class="menu-card-sub">Golden · melty</p>
+      </article>
+      <article class="menu-card" data-cat="sides">
+        <div class="menu-card-img"><img src="images/onion-rings.webp" alt="Onion Rings" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Side</span>
+        <h3 class="menu-card-name">Onion Rings</h3>
+        <p class="menu-card-sub">Hand-battered</p>
+      </article>
+
+      <article class="menu-card" data-cat="dessert">
+        <div class="menu-card-img"><img src="images/baklava.webp" alt="Baklava" loading="lazy" decoding="async" /></div>
+        <span class="menu-card-cat">Dessert</span>
+        <h3 class="menu-card-name">Baklava</h3>
+        <p class="menu-card-sub">Pistachio · the Turkish classic</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="menu-foot">
+      <span>Menu evolves · Ask the counter</span>
+      <span><a href="#order" style="color:var(--chick-orange);border-bottom:1px solid currentColor;">Order online ↓</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ ORDER ONLINE ═══════════════════════ -->
+<section class="order" id="order">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="num">— 04 / Order Online</span>
+        <h2 class="display">PICK YOUR FAVORITE PLATFORM. IT’LL BE READY IN MINUTES.</h2>
+        <p>Delivery or pickup &mdash; same chicken, same sauces. Tap your platform of choice.</p>
+      </div>
+      <div class="head-side">Or call &middot; <a href="tel:+19738306867" style="color:var(--chick-orange);">(973) 830-6867</a></div>
+    </div>
+
+    <div class="delivery-grid">
+      <a class="delivery-card reveal d1" href="https://www.doordash.com/store/chick-point-llc-paterson-28722548/35933348/?srsltid=AfmBOoqj7ZbtRF9ulZtiC1zKxptyDEmxeH14_EVIH0-dm4YernBWNr6N" target="_blank" rel="noopener" aria-label="Order Chick Point on DoorDash">
+        <div class="dc-top">
+          <span class="dc-num">— 01 / Delivery &middot; Pickup</span>
+          <span class="dc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <div>
+          <div class="dc-logo">
+            <div class="dc-mark dd" aria-hidden="true">D</div>
+            <div>
+              <div class="dc-name">DoorDash</div>
+              <div class="dc-meta">Fastest delivery in Paterson</div>
+            </div>
+          </div>
+          <div class="dc-cta" style="margin-top:18px;">Order on DoorDash</div>
+        </div>
+      </a>
+
+      <a class="delivery-card reveal d2" href="https://www.ubereats.com/store/chick-point/3K_kwfp0QmK79VtTZrSh8w?srsltid=AfmBOooF7lb-5Fpvmp_KPQcjAkqpbFidIRryQjm9EtXxMuhbzExO5ikv" target="_blank" rel="noopener" aria-label="Order Chick Point on Uber Eats">
+        <div class="dc-top">
+          <span class="dc-num">— 02 / Delivery &middot; Pickup</span>
+          <span class="dc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <div>
+          <div class="dc-logo">
+            <div class="dc-mark ue" aria-hidden="true">U</div>
+            <div>
+              <div class="dc-name">Uber Eats</div>
+              <div class="dc-meta">Track your order door-to-door</div>
+            </div>
+          </div>
+          <div class="dc-cta" style="margin-top:18px;">Order on Uber Eats</div>
+        </div>
+      </a>
+
+      <a class="delivery-card reveal d3" href="https://www.grubhub.com/restaurant/chick-point-1021-main-st-paterson/8226232" target="_blank" rel="noopener" aria-label="Order Chick Point on Grubhub">
+        <div class="dc-top">
+          <span class="dc-num">— 03 / Delivery &middot; Pickup</span>
+          <span class="dc-arrow" aria-hidden="true">↗</span>
+        </div>
+        <div>
+          <div class="dc-logo">
+            <div class="dc-mark gh" aria-hidden="true">G</div>
+            <div>
+              <div class="dc-name">Grubhub</div>
+              <div class="dc-meta">Loyalty perks &middot; group orders</div>
+            </div>
+          </div>
+          <div class="dc-cta" style="margin-top:18px;">Order on Grubhub</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="order-foot">
+      <span>— Prefer to grab it yourself? <a class="pickup-cta" href="tel:+19738306867">Call for pickup</a></span>
+      <span>Hours apply &middot; See Visit below</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ ABOUT ══════════════════════════════ -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <img id="about-photo" class="about-photo reveal" src="images/about-doner.webp" alt="Chicken doner on the spit — hand-stacked, marinated, cooked daily" loading="lazy" decoding="async" />
+
+      <div class="about-text">
+        <span class="num eyebrow" style="color:var(--chick-orange)">— 05 / About</span>
+        <h2 class="display">New Jersey&apos;s<br/>chicken spot.</h2>
+        <p>Chicken doner, wraps, sandwiches, bowls, burgers. Made fresh, served fast, with <strong>house-made sauces nobody else has.</strong></p>
+        <p>This is chicken done right. Halal certified, fresh daily, and with a personality.</p>
+        <p class="italic" style="color:#555">Come in. Eat well. Come back.</p>
+
+        <div class="stats">
+          <div class="stat"><div class="k">8</div><div class="v">House Sauces</div></div>
+          <div class="stat"><div class="k">100%</div><div class="v">Halal Certified</div></div>
+          <div class="stat"><div class="k">Daily</div><div class="v">Made Fresh</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ QUOTE BAND ═════════════════════════ -->
+<section class="quote-band" id="quote">
+  <div class="bg" style="opacity: 0"><image-slot id="quote-photo" placeholder="Full-bleed action shot · grill or storefront at night"></image-slot></div>
+  <div>
+    <div class="quote display">Best chicken<br/>in New Jersey.<br/><span class="accent">No debate.</span></div>
+    <div class="attr" style="font-size: 6px">— What the regulars say. We're inclined to agree! :)</div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ VISIT ══════════════════════════════ -->
+<section class="visit" id="visit">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="num">— 06 / Find Us</span>
+      <h2 class="display">Main Street.<br/>Paterson.</h2>
+      <p>Walk-in, call ahead, or pull up. We're on Main — same block, same chicken, every day.</p>
+    </div>
+
+    <div class="visit-grid">
+      <image-slot id="storefront-photo" class="visit-photo reveal" placeholder="Storefront photo · daytime or night-lit awning"></image-slot>
+
+      <div class="visit-info reveal d1">
+        <div class="info-block">
+          <div class="k">Address</div>
+          <div class="v">1021/1 Main Street<br/>Paterson, NJ 07503</div>
+        </div>
+        <div class="info-block">
+          <div class="k">Phone</div>
+          <div class="v"><a href="tel:+19738306867">(973) 830-6867</a></div>
+        </div>
+        <div class="info-block">
+          <div class="k">Hours</div>
+          <div class="v">
+            Mon–Thu · 11:30am – 11pm<br/>
+            Fri–Sat · 11:30am – 12am<br/>
+            Sun · 11:30am – 11pm
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="k">Catering</div>
+          <div class="v">Events, parties, and office orders.
+Call (973) 830-6867.</div>
+        </div>
+
+        <a class="google-card" href="https://maps.app.goo.gl/Qa6yaquRpyYK5Rwc9" target="_blank" rel="noopener">
+          <div class="pin">◉</div>
+          <div class="gc-text">
+            <div class="gc-title">Find Us On Google</div>
+            <div class="gc-sub">Directions · reviews · photos</div>
+          </div>
+          <div class="arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════════════ FOOTER ═════════════════════════════ -->
+<footer style="opacity: 0.9">
+  <div class="footer-grid">
+    <div>
+      <img class="footer-logo" src="images/logo.webp" alt="Chick Point — Chicken Gyro" />
+    </div>
+    <div>
+      <h4>Visit</h4>
+      <ul>
+        <li>1021/1 Main Street</li>
+        <li>Paterson, NJ 07503</li>
+        <li><a href="tel:+19738306867">(973) 830-6867</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Hours</h4>
+      <ul>
+        <li>Mon–Thu · 11:30 – 11</li>
+        <li>Fri–Sat · 11:30 – 12</li>
+        <li>Sun · 11:30 – 11</li>
+      </ul>
+    </div>
+    <div>
+      <h4>Follow</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/chickpointusa/" target="_blank" rel="noopener">@chickpointusa</a></li>
+      </ul>
+      <div class="socials">
+        <a href="https://www.instagram.com/chickpointusa/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+        <a href="tel:+19738306867" aria-label="Call">☎</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-base">
+    <span>© 2026 Chick Point · Paterson, NJ</span>
+    <span>chickpointusa.com</span>
+    <span>Brand by Onio Agency</span>
+  </div>
+</footer>
+
+<!-- ═════════════════════════ Running Chicken ════════════════════ -->
+<div class="running-chicken" id="runningChicken" aria-hidden="true">
+  <svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 26 L6 12 L13 26 L2 20 L11 32 L4 32 Z" fill="#C9611A"/>
+    <ellipse cx="40" cy="32" rx="22" ry="15" fill="#F4842A"/>
+    <path d="M30 28 Q40 22 50 30 Q40 38 30 32 Z" fill="#C9611A" opacity="0.55"/>
+    <circle cx="58" cy="22" r="10" fill="#F4842A"/>
+    <path d="M52 14 Q55 7 58 13 Q61 6 64 14 Q58 16 52 14 Z" fill="#D4322B"/>
+    <path d="M67 21 L74 23 L67 25 Z" fill="#FFC04D"/>
+    <circle cx="60" cy="20" r="1.8" fill="#1A1A1A"/>
+    <line class="chk-leg-1" x1="42" y1="46" x2="42" y2="58" stroke="#FFC04D" stroke-width="3" stroke-linecap="round"/>
+    <line class="chk-leg-2" x1="34" y1="46" x2="34" y2="58" stroke="#FFC04D" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<!-- ═════════════════════════ Tweaks (built-in) ══════════════════ -->
+<button id="tweaks-toggle">Tweaks</button>
+<div id="tweaks-panel">
+  <h5>Tweaks</h5>
+  <label>Hero <select id="t-hero"><option value="frame">Framed</option><option value="split">Split</option></select></label>
+  <label>Sauces <select id="t-sauces"><option value="grid">Grid</option><option value="list">List</option></select></label>
+</div>
+
+<script>
+/* ── Menu carousel: duplicate set + tab filter ───────────────── */
+(function () {
+  const track = document.getElementById('menuTrack');
+  const carousel = document.querySelector('.menu-carousel');
+  if (!track || !carousel) return;
+
+  // Duplicate cards for seamless loop
+  track.innerHTML = track.innerHTML + track.innerHTML;
+  const allCards = [...track.children];
+  const halfCount = allCards.length / 2;
+  allCards.slice(halfCount).forEach(el => el.setAttribute('aria-hidden', 'true'));
+  const sourceSet = allCards.slice(0, halfCount);
+
+  document.body.dataset.menuFilter = 'all';
+  const tabs = document.querySelectorAll('.menu-tab');
+
+  // Bring matching card into view by manually overriding the marquee transform.
+  let pendingTimer = null, pendingRaf = null;
+  function alignToFilter(filter) {
+    // Cancel any in-flight cleanup from a previous click so we don't snap back mid-animation
+    if (pendingTimer) { clearTimeout(pendingTimer); pendingTimer = null; }
+    if (pendingRaf)   { cancelAnimationFrame(pendingRaf); pendingRaf = null; }
+
+    if (filter === 'all') {
+      // Capture where we currently are, animate back to 0, then resume CSS animation
+      const m = new DOMMatrixReadOnly(getComputedStyle(track).transform);
+      const currentX = m.m41 || 0;
+      track.style.animation = 'none';
+      track.style.transition = 'none';
+      track.style.transform = `translateX(${currentX}px)`;
+      pendingRaf = requestAnimationFrame(() => {
+        pendingRaf = null;
+        track.style.transition = 'transform 800ms cubic-bezier(0.4, 0, 0.2, 1)';
+        track.style.transform = 'translateX(0)';
+      });
+      pendingTimer = setTimeout(() => {
+        pendingTimer = null;
+        track.style.transition = '';
+        track.style.transform = '';
+        track.style.animation = '';
+      }, 850);
+      return;
+    }
+
+    const target = sourceSet.find(c => c.dataset.cat === filter);
+    if (!target) return;
+
+    // Freeze track at current transform first
+    const m = new DOMMatrixReadOnly(getComputedStyle(track).transform);
+    const currentX = m.m41 || 0;
+    track.style.animation = 'none';
+    track.style.transition = 'none';
+    track.style.transform = `translateX(${currentX}px)`;
+
+    pendingRaf = requestAnimationFrame(() => {
+      pendingRaf = null;
+      const carouselRect = carousel.getBoundingClientRect();
+      const cardRect = target.getBoundingClientRect();
+      const pad = Math.max(60, carouselRect.width * 0.06);
+      const delta = (carouselRect.left + pad) - cardRect.left;
+      const desiredX = currentX + delta;
+      track.style.transition = 'transform 700ms cubic-bezier(0.4, 0, 0.2, 1)';
+      track.style.transform = `translateX(${desiredX}px)`;
+    });
+  }
+
+  tabs.forEach(t => t.addEventListener('click', () => {
+    const f = t.dataset.filter;
+    document.body.dataset.menuFilter = f;
+    tabs.forEach(x => x.setAttribute('aria-pressed', x === t ? 'true' : 'false'));
+    alignToFilter(f);
+  }));
+})();
+
+/* ── Running Chicken (occasional easter-egg crossing) ────────── */
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const chicken = document.getElementById('runningChicken');
+  if (!chicken) return;
+  function run() {
+    chicken.classList.remove('run');
+    void chicken.offsetWidth; // restart animation
+    chicken.classList.add('run');
+    setTimeout(run, 28000 + Math.random() * 22000);
+  }
+  setTimeout(run, 9000 + Math.random() * 9000);
+})();
+
+/* ── Reveal on scroll ────────────────────────────────────────── */
+(function () {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* ── Persistent CTA: tel on mobile, scroll on desktop ────────── */
+(function () {
+  const cta = document.getElementById('ctaTop');
+  const isCoarse = matchMedia('(pointer: coarse)').matches || matchMedia('(max-width: 720px)').matches;
+  if (!isCoarse) {
+    cta.setAttribute('href', '#visit');
+    cta.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('visit').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+})();
+
+/* ── Tweaks (Edit Mode) ──────────────────────────────────────── */
+(function () {
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "hero": "frame",
+    "sauces": "list"
+  }/*EDITMODE-END*/;
+
+  const state = { ...TWEAK_DEFAULTS };
+  const apply = () => {
+    document.body.dataset.hero = state.hero;
+    document.body.dataset.sauces = state.sauces;
+    document.getElementById('t-hero').value = state.hero;
+    document.getElementById('t-sauces').value = state.sauces;
+  };
+  apply();
+
+  // Edit-mode protocol
+  let editOn = false;
+  const setOpen = (on) => {
+    editOn = on;
+    document.body.classList.toggle('tweaks-open', on);
+    document.getElementById('tweaks-toggle').style.display = on ? 'inline-flex' : 'none';
+  };
+  window.addEventListener('message', (e) => {
+    const d = e.data || {};
+    if (d.type === '__activate_edit_mode') setOpen(true);
+    if (d.type === '__deactivate_edit_mode') setOpen(false);
+  });
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+  document.getElementById('tweaks-toggle').addEventListener('click', () => {
+    const panel = document.getElementById('tweaks-panel');
+    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  });
+
+  const wire = (id, key) => document.getElementById(id).addEventListener('change', (e) => {
+    state[key] = e.target.value;
+    apply();
+    const edits = {}; edits[key] = e.target.value;
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+  });
+  wire('t-hero', 'hero');
+  wire('t-sauces', 'sauces');
+})();
+</script>
+
+</body>
+</html>
